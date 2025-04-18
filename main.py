@@ -1,4 +1,5 @@
 from random import randint
+# Cores de Texto
 RED = "\033[31m"
 GREEN = "\033[32m"
 YELLOW = "\033[33m"
@@ -7,6 +8,20 @@ MAGENTA = "\033[35m"
 CYAN = "\033[36m"
 WHITE = "\033[37m"
 RESET = "\033[0m"  # Volta para a cor padrão
+
+# Cores de fundo
+BG_RED = "\033[41m"
+BG_GREEN = "\033[42m"
+BG_YELLOW = "\033[43m"
+BG_BLUE = "\033[44m"
+BG_MAGENTA = "\033[45m"
+BG_CYAN = "\033[46m"
+BG_WHITE = "\033[47m"
+
+# Estilos
+BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
+RESET = "\033[0m"
 
 #função colocar dados no copo
 def colocar_dados_copo(copo):
@@ -94,8 +109,8 @@ def pontuacao(primeiro_dado, segundo_dado, terceiro_dado):
 
 from random import randint
 
-print(f'{CYAN} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
-print('=' * 33)
+print(f'{BG_RED}{WHITE}{BOLD} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
+print(f'{BG_RED}{WHITE}=' * 33 + RESET)
 #numero de jogadores deve ser de no minimo de 2
 num_jogadores = 0
 while num_jogadores < 2:
@@ -194,7 +209,7 @@ while True:
 
 #Caso atinja a condição de 3 tiros ou mais, morre
             if lista_jogadores[cod][2][1] > 2:
-                print(f'\n {RED}BOOOOM! Você levou muitos tiros e morreu!!!{RESET}\n')
+                print(f'\n {BG_RED}{WHITE}{BOLD}BOOOOM! Você levou muitos tiros e morreu!!!{RESET}\n')
                 lista_jogadores[cod][2][0] = 0
                 lista_jogadores[cod][2][1] = 0
                 esvaziar_copo = []
@@ -204,7 +219,7 @@ while True:
 
 #Caso atinja a condição de 3 cerebros ou mais, vence
             if lista_jogadores[cod][2][0] > 2:
-                print('Parabéns, voce venceu!\n')
+                print(f'{BG_GREEN}{WHITE}{BOLD}PARABÉNS, ZUMBIE MESTRE! VOCÊ VENCEU!{RESET}\n')
                 turno = False
                 break
 
