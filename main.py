@@ -1,3 +1,13 @@
+from random import randint
+RED = "\033[31m"
+GREEN = "\033[32m"
+YELLOW = "\033[33m"
+BLUE = "\033[34m"
+MAGENTA = "\033[35m"
+CYAN = "\033[36m"
+WHITE = "\033[37m"
+RESET = "\033[0m"  # Volta para a cor padrão
+
 #função colocar dados no copo
 def colocar_dados_copo(copo):
     for i in range(6):
@@ -23,13 +33,13 @@ def pegar_dados_copo(copo):
 def lancar_dados(dado):
     face_dado = randint(0,5)
     if dado[face_dado] == 'C':
-        print('Você tirou Cerebro!')
+        print(f'{GREEN}Você tirou Cerebro!{RESET}')
         return 'C'
     elif dado[face_dado] == 'P':
-        print('Você tirou Passo!')
+        print(f'{YELLOW}Você tirou Passo!{RESET}')
         return 'P'
     elif dado[face_dado] == 'T':
-        print('Você tirou Tiro!')
+        print(f'{RED}Você tirou Tiro!{RESET}')
         return 'T'
 
 #Função sortear dados
@@ -84,18 +94,18 @@ def pontuacao(primeiro_dado, segundo_dado, terceiro_dado):
 
 from random import randint
 
-print(' BEM VINDO AO JOGO ZOMBIE DICE!! ')
+print(f'{CYAN} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
 print('=' * 33)
 #numero de jogadores deve ser de no minimo de 2
 num_jogadores = 0
 while num_jogadores < 2:
     num_jogadores = int(input('Digite o número de jogadores:'))
     if num_jogadores < 2:
-        print("Você precisa de no minimo 2 jogadores")
+        print(f"{RED}Você precisa de no minimo 2 jogadores{RESET}")
 # iniciando a lista jogadores e recebendo seus nomes, a seguir os guardando na lista
 lista_jogadores = []
 for codigo in range(0, num_jogadores):
-    nome = str(input('Escreva o nome do jogador:'))
+    nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
     cerebro = 0
     tiro = 0
     jogador = [codigo, nome, [cerebro, tiro]]
@@ -115,7 +125,7 @@ while True:
         mostrar_dados(copo)
         cod = jogador[0]
         nome = jogador[1]
-        print('Vez do jogador:', nome)
+        print(f'\n {CYAN}=== Vez do jogador: {nome} ==={RESET}')
         turno = True
         dado1 = True
         dado2 = True
@@ -178,13 +188,13 @@ while True:
             lista_jogadores[cod][2][1] = jogador[2][1] + tiro
 
 #mostrando placar
-            print('Jogador: ' + lista_jogadores[cod][1])
-            print('Cerebros: ' + str(lista_jogadores[cod][2][0]))
-            print('Tiros: ' + str(lista_jogadores[cod][2][1]))
+            print(f'{MAGENTA}Jogador:  {RESET}'+ lista_jogadores[cod][1])
+            print(f'{GREEN}Cerebros: {RESET}' + str(lista_jogadores[cod][2][0]))
+            print(f'{RED}Tiros: {RESET}' + str(lista_jogadores[cod][2][1]))
 
 #Caso atinja a condição de 3 tiros ou mais, morre
             if lista_jogadores[cod][2][1] > 2:
-                print('Você morreu!\n')
+                print(f'\n {RED}BOOOOM! Você levou muitos tiros e morreu!!!{RESET}\n')
                 lista_jogadores[cod][2][0] = 0
                 lista_jogadores[cod][2][1] = 0
                 esvaziar_copo = []
