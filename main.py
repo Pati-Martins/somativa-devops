@@ -94,18 +94,18 @@ def pontuacao(primeiro_dado, segundo_dado, terceiro_dado):
 
 from random import randint
 
-print(' BEM VINDO AO JOGO ZOMBIE DICE!! ')
+print(f'{CYAN} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
 print('=' * 33)
 #numero de jogadores deve ser de no minimo de 2
 num_jogadores = 0
 while num_jogadores < 2:
     num_jogadores = int(input('Digite o número de jogadores:'))
     if num_jogadores < 2:
-        print("Você precisa de no minimo 2 jogadores")
+        print(f"{RED}Você precisa de no minimo 2 jogadores{RESET}")
 # iniciando a lista jogadores e recebendo seus nomes, a seguir os guardando na lista
 lista_jogadores = []
 for codigo in range(0, num_jogadores):
-    nome = str(input('Escreva o nome do jogador:'))
+    nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
     cerebro = 0
     tiro = 0
     jogador = [codigo, nome, [cerebro, tiro]]
