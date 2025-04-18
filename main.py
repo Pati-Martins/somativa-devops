@@ -184,7 +184,7 @@ while True:
 
 #Caso atinja a condição de 3 tiros ou mais, morre
             if lista_jogadores[cod][2][1] > 2:
-                print('Você morreu!\n')
+                print('BOOOOM! Você levou muitos tiros e morreu!!!\n')
                 lista_jogadores[cod][2][0] = 0
                 lista_jogadores[cod][2][1] = 0
                 esvaziar_copo = []
