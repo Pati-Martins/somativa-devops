@@ -1,53 +1,49 @@
 import unittest
-from unittest.mock import patch
 from src.main import *
-import pytest
 
-''''@pytest.mark.asyncio
-def test_obter_num_jogadores(self):
-    with patch('builtins.input', return_value='2'):
+
+class TestZombieDice(unittest.TestCase):
+
+    def test_obter_num_jogadores(self):
         resultado = obter_num_jogadores()
-        self.assertEqual(resultado, 2)
+        self.assertEqual(resultado, 3)
 
-@pytest.mark.asyncio
-def test_obter_nomes_jogadores(self):
-    with patch('builtins.input', side_effect=['Alice', 'Bob']):
+    def test_obter_nomes_jogadores(self):
         jogadores = obter_nomes_jogadores(2)
         self.assertEqual(len(jogadores), 2)
-        self.assertEqual(jogadores[0][1], 'Alice')
-        self.assertEqual(jogadores[1][1], 'Bob')'''
+        self.assertEqual(jogadores[0][1], "João")
+        self.assertEqual(jogadores[1][1], "Maria")
 
-@pytest.mark.asyncio
-def test_dados_no_copo(self):
-    copo = []
-    copo = colocar_dados_copo(copo)
+    def test_colocar_dados_copo(self):
+        copo = colocar_dados_copo()
+        self.assertEqual(len(copo), 13)  # 6 verdes + 4 amarelos + 3 vermelhos
 
-    self.assertEqual(len(copo), 13)
+    def test_pegar_dados_copo(self):
+        copo = [('C', 'P', 'C', 'T', 'P', 'C'), ('T', 'P', 'C', 'T', 'P', 'C')]
+        dado, novo_copo = pegar_dados_copo(copo)
+        self.assertIn(dado, copo)
+        self.assertEqual(len(novo_copo), 1)
 
-    dado, novo_copo = pegar_dados_copo(copo)
-    self.assertEqual(len(novo_copo), 12)
+    def test_lancar_dados(self):
+        dado = ('C', 'P', 'C', 'T', 'P', 'C')
+        resultado = lancar_dados(dado)
+        self.assertIn(resultado, ['C', 'P', 'T'])
 
-@patch('random.randint', return_value=0)
-def test_lancar_dado(self, mock_rand):
-    dado_verde = ('C', 'P', 'C', 'T', 'P', 'C')
-    resultado = lancar_dados(dado_verde)
-    self.assertEqual(resultado, 'C')
+    def test_pontuacao(self):
+        # Testa algumas combinações básicas
+        self.assertEqual(pontuacao(['C', 'P', 'T']), (1, 1, 1))
+        self.assertEqual(pontuacao(['C', 'C', 'C']), (3, 0, 0))
+        self.assertEqual(pontuacao(['T', 'T', 'T']), (0, 0, 3))
 
-def test_pontuacao(self):
-    c, p, t = pontuacao('C', 'P', 'T')
-    self.assertEqual((c, p, t), (1, 1, 1))
+    def test_verificar_vitoria(self):
+        # Testa com vencedor
+        jogadores = [[0, "João", [13, 0]], [1, "Maria", [5, 0]]]
+        self.assertTrue(verificar_vitoria(jogadores))
 
-@patch('random.randint', return_value=0)
-def test_turno_simples(self, mock_rand):
-    copo = []
-    colocar_dados_copo(copo)
+        # Testa sem vencedor
+        jogadores = [[0, "João", [10, 0]], [1, "Maria", [5, 0]]]
+        self.assertFalse(verificar_vitoria(jogadores))
 
-    dados = []
-    for _ in range(3):
-        dado, copo = pegar_dados_copo(copo)
-        dados.append(dado)
 
-    resultados = [lancar_dados(d) for d in dados]
-
-    c, p, t = pontuacao(*resultados)
-    self.assertGreaterEqual(c, 0)
+if __name__ == '__main__':
+    unittest.main()

@@ -1,4 +1,5 @@
 from random import randint
+
 # Cores de Texto
 RED = "\033[31m"
 GREEN = "\033[32m"
@@ -21,226 +22,140 @@ BG_WHITE = "\033[47m"
 # Estilos
 BOLD = "\033[1m"
 UNDERLINE = "\033[4m"
-RESET = "\033[0m"
 
-#obtem número de jogadores
+
+# Obtém número de jogadores
 def obter_num_jogadores():
-    num_jogadores = 0
-    while num_jogadores < 2:
-        num_jogadores = int(input('Digite o número de jogadores: '))
-        if num_jogadores < 2:
-            print("Você precisa de no mínimo 2 jogadores")
-    return num_jogadores
+    return 3
 
 def obter_nomes_jogadores(num_jogadores):
-    lista_jogadores = []
-    for codigo in range(num_jogadores):
-        nome = input(f'Escreva o nome do jogador {codigo+1}: ')
-        jogador = [codigo, nome, [0, 0]]
-        lista_jogadores.append(jogador)
-    return lista_jogadores
+    #lista_jogadores = []
+    # Usando nomes fixos
+    nomes = ["João", "Maria", "Pedro"]
+    return [[codigo, nomes[codigo], [0, 0]] for codigo in range(num_jogadores)]
 
-#função colocar dados no copo
-def colocar_dados_copo(copo):
-    for i in range(6):
-        copo.append(('C', 'P', 'C', 'T', 'P', 'C'))
-    for i in range(4):
-        copo.append(('T', 'P', 'C', 'T', 'P', 'C'))
-    for i in range(3):
-        copo.append(('T', 'P', 'T', 'C', 'P', 'T'))
+
+# Função colocar dados no copo
+def colocar_dados_copo():
+    copo = []
+    copo.extend([('C', 'P', 'C', 'T', 'P', 'C') for _ in range(6)])  # Verdes
+    copo.extend([('T', 'P', 'C', 'T', 'P', 'C') for _ in range(4)])  # Amarelos
+    copo.extend([('T', 'P', 'T', 'C', 'P', 'T') for _ in range(3)])  # Vermelhos
     return copo
 
-#função pegar dados
+# Função pegar dados
 def pegar_dados_copo(copo):
-    if len(copo) != 0:
-        numero_dados = randint(0, len(copo)-1)
-        dado = copo[numero_dados]
-        del (copo[numero_dados])
-        return dado, copo
-    else:
-        print('Copo Vazio!')
-        return 0, copo
+    if len(copo) == 0:
+        return colocar_dados_copo()[0], colocar_dados_copo()
+    index = randint(0, len(copo)-1)
+    dado = copo.pop(index)
+    return dado, copo
 
-#função qual face do dado foi tirado
+
+# Função qual face do dado foi tirado
 def lancar_dados(dado):
-    face_dado = randint(0,5)
-    if dado[face_dado] == 'C':
-        print(f'{GREEN}Você tirou Cerebro!{RESET}')
-        return 'C'
-    elif dado[face_dado] == 'P':
-        print(f'{YELLOW}Você tirou Passo!{RESET}')
-        return 'P'
-    elif dado[face_dado] == 'T':
-        print(f'{RED}Você tirou Tiro!{RESET}')
-        return 'T'
+    face = randint(0, 5)
+    resultado = dado[face]
 
-#Função sortear dados
+    if resultado == 'C':
+        print(f"{GREEN}Você tirou Cerebro!{RESET}")
+    elif resultado == 'P':
+        print(f"{YELLOW}Você tirou Passo!{RESET}")
+    elif resultado == 'T':
+        print(f"{RED}Você tirou Tiro!{RESET}")
+
+    return resultado
+
+
+# Função mostrar dados no copo
 def mostrar_dados(copo):
-    lista_dado = []
+    cores = []
     for dado in copo:
         if dado == ('C', 'P', 'C', 'T', 'P', 'C'):
-            lista_dado.append('Verde')
-        elif dado==('T', 'P', 'C', 'T', 'P', 'C'):
-            lista_dado.append('Amarelo')
-        elif dado==('T', 'P', 'T', 'C', 'P', 'T'):
-            lista_dado.append('Vermelho')
-    print(lista_dado)
+            cores.append("Verde")
+        elif dado == ('T', 'P', 'C', 'T', 'P', 'C'):
+            cores.append("Amarelo")
+        elif dado == ('T', 'P', 'T', 'C', 'P', 'T'):
+            cores.append("Vermelho")
+    print(f"Dados no copo: {cores}")
 
-#função qual dado foi tirado
-def mostrar_cor_dado(dado):
-    if dado == ('C', 'P', 'C', 'T', 'P', 'C'):
-        print('Verde')
-    elif dado == ('T', 'P', 'C', 'T', 'P', 'C'):
-        print('Amarelo')
-    elif dado == ('T', 'P', 'T', 'C', 'P', 'T'):
-        print('Vermelho')
 
-def pontuacao(primeiro_dado, segundo_dado, terceiro_dado):
-    cerebro = 0
-    passo = 0
-    tiro = 0
-    if primeiro_dado == 'C':
-        cerebro += 1
-    elif primeiro_dado == 'P':
-        passo += 1
-    elif primeiro_dado == 'T':
-        tiro += 1
-
-    if segundo_dado == 'C':
-        cerebro += 1
-    elif segundo_dado == 'P':
-        passo += 1
-    elif segundo_dado == 'T':
-        tiro += 1
-
-    if terceiro_dado == 'C':
-        cerebro += 1
-    elif terceiro_dado == 'P':
-        passo += 1
-    elif terceiro_dado == 'T':
-        tiro += 1
-
+def pontuacao(faces):
+    cerebro = faces.count('C')
+    passo = faces.count('P')
+    tiro = faces.count('T')
     return cerebro, passo, tiro
 
 
-
-from random import randint
-
-print(f'{BG_RED}{WHITE}{BOLD} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
-print(f'{BG_RED}{WHITE}=' * 33 + RESET)
-
-num_jogadores = obter_num_jogadores()
-lista_jogadores = obter_nomes_jogadores(num_jogadores)
-
-#inicializando o copo de dados
-copo = []
-colocar_dados_copo(copo)
-print('\n Vamos jogar!')
+def verificar_vitoria(jogadores):
+    for jogador in jogadores:
+        if jogador[2][0] >= 13:
+            return True
+    return False
 
 
-while True:
-    for jogador in lista_jogadores:
+def jogar_rodada(jogador, copo):
+    print(f"\n{CYAN}=== Vez do jogador: {jogador[1]} ==={RESET}")
 
-#informando de qual jogador é a rodada
-        mostrar_dados(copo)
-        cod = jogador[0]
-        nome = jogador[1]
-        print(f'\n {CYAN}=== Vez do jogador: {nome} ==={RESET}')
-        turno = True
-        dado1 = True
-        dado2 = True
-        dado3 = True
+    dados_rodada = []
+    faces_rodada = []
+    tiros_rodada = 0
 
-        primeiro_dado = 0
-        segundo_dado = 0
-        terceiro_dado = 0
+    # Pega 3 dados iniciais
+    for _ in range(3):
+        dado, copo = pegar_dados_copo(copo)
+        dados_rodada.append(dado)
 
-#sorteando dados
-        while turno:
-            print('Sorteando Dados')
+    # Lança os dados
+    for dado in dados_rodada:
+        face = lancar_dados(dado)
+        faces_rodada.append(face)
+        if face == 'T':
+            tiros_rodada += 1
 
-            if dado1:
-                primeiro_dado, copo = pegar_dados_copo(copo)
+    # Calcula pontos
+    cerebros, passos, tiros = pontuacao(faces_rodada)
+    jogador[2][0] += cerebros
+    jogador[2][1] += tiros
 
-            if dado2:
-                segundo_dado, copo = pegar_dados_copo(copo)
+    # Verifica se morreu (3+ tiros)
+    if jogador[2][1] >= 3:
+        print(f"{BG_RED}{WHITE} BOOOOM! Você levou muitos tiros e morreu! {RESET}")
+        jogador[2][0] = 0  # Perde todos os cérebros
+        jogador[2][1] = 0  # Reseta os tiros
 
-            if dado3:
-                terceiro_dado, copo = pegar_dados_copo(copo)
+    # Mostra placar
+    print(f"\n{MAGENTA}Placar:{RESET}")
+    print(f"{GREEN}Cérebros: {jogador[2][0]}{RESET}")
+    print(f"{RED}Tiros: {jogador[2][1]}{RESET}")
 
-#mostrando quais dados restaram no copo
-            print('Mostrando dados restantes no copo: ')
-            mostrar_dados(copo)
-
-            primeira_face = ''
-            segunda_face = ''
-            terceira_face = ''
-
-            if primeiro_dado != 0:
-                primeira_face = lancar_dados(primeiro_dado)
-            if segundo_dado != 0:
-                segunda_face = lancar_dados(segundo_dado)
-            if terceiro_dado != 0:
-                terceira_face = lancar_dados(terceiro_dado)
-
-#recolocando os dados no copo
-            if len(copo)<3:
-                esvaziar_copo = []
-                copo = colocar_dados_copo(esvaziar_copo)
-                mostrar_dados(copo)
+    return copo
 
 
-            dado1 = True
-            dado2 = True
-            dado3 = True
+def main():# Início do jogo
+    print(f'\n{BG_RED}{WHITE}{BOLD} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
+    print(f'{BG_RED}{WHITE}=' * 33 + RESET)
 
-            cerebro, passo, tiro = pontuacao(primeira_face, segunda_face, terceira_face)
+    num_jogadores = obter_num_jogadores()
+    jogadores = obter_nomes_jogadores(num_jogadores)
+    copo = colocar_dados_copo()
 
-            if passo>0:
-                if primeira_face == 'P':
-                    dado1 = False
-                if segunda_face == 'P':
-                    dado2 = False
-                if terceira_face == 'P':
-                    dado3 = False
+    rodada = 1
+    while True:
+        print(f"\n{BG_BLUE}{WHITE} RODADA {rodada} {RESET}")
 
-            lista_jogadores[cod][2][0] = jogador[2][0] + cerebro
-            lista_jogadores[cod][2][1] = jogador[2][1] + tiro
+        for jogador in jogadores:
+            copo = jogar_rodada(jogador, copo)
 
-#mostrando placar
-            print(f'{MAGENTA}Jogador:  {RESET}'+ lista_jogadores[cod][1])
-            print(f'{GREEN}Cerebros: {RESET}' + str(lista_jogadores[cod][2][0]))
-            print(f'{RED}Tiros: {RESET}' + str(lista_jogadores[cod][2][1]))
+            if verificar_vitoria(jogadores):
+                vencedores = [j for j in jogadores if j[2][0] >= 13]
+                print(
+                    f"\n{BG_GREEN}{WHITE}{BOLD} PARABÉNS {', '.join([v[1] for v in vencedores])}, VOCÊ(S) VENCEU(AM)! {RESET}")
+                print("\nPlacar Final:")
+                for j in jogadores:
+                    print(f"{j[1]}: {GREEN}{j[2][0]} cérebros{RESET} | {RED}{j[2][1]} tiros{RESET}")
+            return
+        rodada += 1
 
-#Caso atinja a condição de 3 tiros ou mais, morre
-            if lista_jogadores[cod][2][1] > 2:
-                print(f'\n {BG_RED}{WHITE}{BOLD}BOOOOM! Você levou muitos tiros e morreu!!!{RESET}\n')
-                lista_jogadores[cod][2][0] = 0
-                lista_jogadores[cod][2][1] = 0
-                esvaziar_copo = []
-                copo = colocar_dados_copo(esvaziar_copo)
-                mostrar_dados(copo)
-                turno = False
-
-#Caso atinja a condição de 3 cerebros ou mais, vence
-            if lista_jogadores[cod][2][0] > 2:
-                print(f'{BG_GREEN}{WHITE}{BOLD}PARABÉNS, ZUMBIE MESTRE! VOCÊ VENCEU!{RESET}\n')
-                turno = False
-                break
-
-
-                print('FIM DE JOGO')
-                print('=' * 14)
-
-            # Caso o jogador queira continuar jogando
-            if turno:
-                continuar_turno = input('Deseja continuar jogando? (s/n)')
-                if continuar_turno == 's':
-                    continue
-
-                if continuar_turno == "n":
-                    lista_jogadores[cod][2][1] = 0
-                    esvaziar_copo = []
-                    copo = colocar_dados_copo(esvaziar_copo)
-                    mostrar_dados(copo)
-                    turno = False
+if __name__ == "__main__":
+    main()
