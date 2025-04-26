@@ -32,6 +32,14 @@ def obter_num_jogadores():
             print("Você precisa de no mínimo 2 jogadores")
     return num_jogadores
 
+def obter_nomes_jogadores(num_jogadores):
+    lista_jogadores = []
+    for codigo in range(num_jogadores):
+        nome = input(f'Escreva o nome do jogador {codigo+1}: ')
+        jogador = [codigo, nome, [0, 0]]
+        lista_jogadores.append(jogador)
+    return lista_jogadores
+
 #função colocar dados no copo
 def colocar_dados_copo(copo):
     for i in range(6):
@@ -129,15 +137,16 @@ print(f'{BG_RED}{WHITE}=' * 33 + RESET)
 # iniciando a lista jogadores e recebendo seus nomes, a seguir os guardando na lista
 
 num_jogadores = obter_num_jogadores()
+lista_jogadores = obter_nomes_jogadores(num_jogadores)
 
-lista_jogadores = []
-for codigo in range(0, num_jogadores):
-    nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
-    cerebro = 0
-    tiro = 0
-    jogador = [codigo, nome, [cerebro, tiro]]
-
-    lista_jogadores.append(jogador)
+#lista_jogadores = []
+#for codigo in range(0, num_jogadores):
+#    nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
+#    cerebro = 0
+#    tiro = 0
+#    jogador = [codigo, nome, [cerebro, tiro]]
+#
+#    lista_jogadores.append(jogador)
 
 #inicializando o copo de dados
 copo = []
