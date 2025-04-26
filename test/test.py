@@ -5,12 +5,24 @@ from src.main import *
 
 class TestZombieDice(unittest.TestCase):
 
-    def test_obter_jogadores(self):
+    def test_obter_num_jogadores(self):
+        with patch('builtins.input', return_value='2'):
+            resultado = obter_num_jogadores()
+            self.assertEqual(resultado, 2)
+
+    def test_obter_nomes_jogadores(self):
+        with patch('builtins.input', side_effect=['Alice', 'Bob']):
+            jogadores = obter_nomes_jogadores(2)
+            self.assertEqual(len(jogadores), 2)
+            self.assertEqual(jogadores[0][1], 'Alice')
+            self.assertEqual(jogadores[1][1], 'Bob')
+
+    """def test_obter_jogadores(self):
         with patch('builtins.input', side_effect=['2', 'Ana', 'Bob']):
             num = obter_num_jogadores()
             jogadores = obter_nomes_jogadores(num)
             self.assertEqual(len(jogadores), 2)
-            self.assertEqual(jogadores[0][1], 'Ana')
+            self.assertEqual(jogadores[0][1], 'Ana')"""
 
     def test_dados_no_copo(self):
         copo = []

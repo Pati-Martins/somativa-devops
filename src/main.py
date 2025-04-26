@@ -128,25 +128,9 @@ from random import randint
 
 print(f'{BG_RED}{WHITE}{BOLD} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
 print(f'{BG_RED}{WHITE}=' * 33 + RESET)
-#numero de jogadores deve ser de no minimo de 2
-#num_jogadores = 0
-#while num_jogadores < 2:
-#    num_jogadores = int(input('Digite o número de jogadores:'))
-#    if num_jogadores < 2:
-#        print(f"{RED}Você precisa de no minimo 2 jogadores{RESET}")
-# iniciando a lista jogadores e recebendo seus nomes, a seguir os guardando na lista
 
 num_jogadores = obter_num_jogadores()
 lista_jogadores = obter_nomes_jogadores(num_jogadores)
-
-#lista_jogadores = []
-#for codigo in range(0, num_jogadores):
-#    nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
-#    cerebro = 0
-#    tiro = 0
-#    jogador = [codigo, nome, [cerebro, tiro]]
-#
-#    lista_jogadores.append(jogador)
 
 #inicializando o copo de dados
 copo = []
