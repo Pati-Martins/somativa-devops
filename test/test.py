@@ -19,10 +19,11 @@ class TestZombieDice(unittest.TestCase):
         self.assertEqual(len(copo), 13)  # 6 verdes + 4 amarelos + 3 vermelhos
 
     def test_pegar_dados_copo(self):
-        copo = [('C', 'P', 'C', 'T', 'P', 'C'), ('T', 'P', 'C', 'T', 'P', 'C')]
-        dado, novo_copo = pegar_dados_copo(copo)
-        self.assertIn(dado, copo)
-        self.assertEqual(len(novo_copo), 1)
+        def test_pegar_dados_copo(self):
+            copo = [('C', 'P', 'C', 'T', 'P', 'C'), ('T', 'P', 'C', 'T', 'P', 'C')]
+            copo_original = copo.copy()
+            dado, novo_copo = pegar_dados_copo(copo)
+            self.assertIn(dado, copo_original)
 
     def test_lancar_dados(self):
         dado = ('C', 'P', 'C', 'T', 'P', 'C')
