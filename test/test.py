@@ -33,8 +33,12 @@ def test_pontuacao():
 def test_pegar_dados_copo_vazio():
     assert pegar_dados_copo([]) == (0, [])
 
+@pytest.mark.asyncio
+def test_obter_num_jogadores():
+    with patch("builtins.input", return_value="2"):
+        assert obter_num_jogadores() == 2
 
-    
+
 #class TestCopoSimples(unittest.TestCase):
 #    async def test_colocar_dados_copo(self):
 #        copo = []

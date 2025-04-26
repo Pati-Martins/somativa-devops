@@ -23,6 +23,15 @@ BOLD = "\033[1m"
 UNDERLINE = "\033[4m"
 RESET = "\033[0m"
 
+#obtem número de jogadores
+def obter_num_jogadores():
+    num_jogadores = 0
+    while num_jogadores < 2:
+        num_jogadores = int(input('Digite o número de jogadores: '))
+        if num_jogadores < 2:
+            print("Você precisa de no mínimo 2 jogadores")
+    return num_jogadores
+
 #função colocar dados no copo
 def colocar_dados_copo(copo):
     for i in range(6):
@@ -112,12 +121,15 @@ from random import randint
 print(f'{BG_RED}{WHITE}{BOLD} BEM VINDO AO JOGO ZOMBIE DICE!! {RESET}')
 print(f'{BG_RED}{WHITE}=' * 33 + RESET)
 #numero de jogadores deve ser de no minimo de 2
-num_jogadores = 0
-while num_jogadores < 2:
-    num_jogadores = int(input('Digite o número de jogadores:'))
-    if num_jogadores < 2:
-        print(f"{RED}Você precisa de no minimo 2 jogadores{RESET}")
+#num_jogadores = 0
+#while num_jogadores < 2:
+#    num_jogadores = int(input('Digite o número de jogadores:'))
+#    if num_jogadores < 2:
+#        print(f"{RED}Você precisa de no minimo 2 jogadores{RESET}")
 # iniciando a lista jogadores e recebendo seus nomes, a seguir os guardando na lista
+
+num_jogadores = obter_num_jogadores()
+
 lista_jogadores = []
 for codigo in range(0, num_jogadores):
     nome = str(input(f'{BLUE}Nome do jogador:{RESET}'))
